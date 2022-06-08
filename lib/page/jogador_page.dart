@@ -1,3 +1,4 @@
+import 'package:first/model/time.dart';
 import 'package:first/service/rest_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -26,8 +27,10 @@ class _JogadorPageState extends State<JogadorPage> {
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
             ),
-            onPressed: () {
-              RestService().getter("/time/list");
+            onPressed: () async {
+              List<dynamic> a = await RestService().list("/time/list", null);
+              List<Time> times = a.map((e) => Time.fromJson(e)).toList();
+              print(times);
             },
             child: Text('TextButton'),
           )
