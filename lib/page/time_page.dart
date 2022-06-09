@@ -35,8 +35,17 @@ class _TimePageState extends State<TimePage> {
         appBar: AppBar(
           title: Text('Time lista versão 1'),
         ),
-        body: Row(
-          children: times.map((e) => Text(e.nome.toString())).toList(),
-        ));
+        body: ListView(
+            children: times
+                .map((e) => Card(
+                        child: ListTile(
+                      title: Text(e.nome.toString()),
+                      subtitle: Text(e.id.toString()),
+                    )))
+                .toList()) //Row(
+        //children: times.map((e) => Text(e.nome.toString())).toList(),
+        // )
+
+        );
   }
 }
