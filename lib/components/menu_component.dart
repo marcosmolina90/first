@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:first/global.dart' as globals;
 
 class MenuComponente extends StatelessWidget {
   const MenuComponente({

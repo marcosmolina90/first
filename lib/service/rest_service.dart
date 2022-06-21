@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:first/model/time.dart';
 import 'package:first/service/intercept_http.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -46,5 +47,22 @@ class RestService {
     }
 
     return ret;
+  }
+
+  Future<void> save(String service, obj) async {
+    var url = getUri(service + "/insert", null);
+    final response = await client.post(url, body: jsonEncode(obj));
+
+    if (response.statusCode != 200) {
+      throw Exception("Erro ao salvar \n ${response.body}");
+    }
+  }
+
+  Future<void> update(String service, obj) async {
+    var url = getUri(service + "/update", null);
+    final response = await client.post(url, body: jsonEncode(obj));
+    if (response.statusCode != 200) {
+      throw Exception("Erro ao atualizar \n ${response.body}");
+    }
   }
 }

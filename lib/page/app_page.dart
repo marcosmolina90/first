@@ -1,6 +1,6 @@
 import 'package:first/page/time_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:first/global.dart' as globals;
 import 'jogador_page.dart';
 
 class AppPage extends StatelessWidget {
@@ -13,7 +13,10 @@ class AppPage extends StatelessWidget {
       builder: (context, clild) {
         return MaterialApp(
             theme: ThemeData(
-                primaryColor: Colors.green, brightness: Brightness.dark),
+                primaryColor: Colors.green,
+                brightness: AppController.instance.isDarkTheme
+                    ? Brightness.dark
+                    : Brightness.light),
             initialRoute: '/jogador',
             routes: {
               '/jogador': (context) => JogadorPage(),
@@ -26,4 +29,9 @@ class AppPage extends StatelessWidget {
 
 class AppController extends ChangeNotifier {
   static AppController instance = AppController();
+  bool isDarkTheme = true;
+  changeThema() {
+    isDarkTheme = !isDarkTheme;
+    notifyListeners();
+  }
 }
