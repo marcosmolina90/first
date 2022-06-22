@@ -21,4 +21,7 @@ class Jogador {
     data['nome'] = this.nome;
     return data;
   }
+
+  @override
+  bool equals(Jogador e1, Jogador e2) => e1.id == e2.id;
 }

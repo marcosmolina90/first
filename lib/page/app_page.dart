@@ -1,3 +1,4 @@
+import 'package:first/page/add_time_page.dart';
 import 'package:first/page/time_page.dart';
 import 'package:flutter/material.dart';
 import 'package:first/global.dart' as globals;
@@ -20,6 +21,7 @@ class AppPage extends StatelessWidget {
             initialRoute: '/jogador',
             routes: {
               '/jogador': (context) => JogadorPage(),
+              '/addTime': (context) => AddTime(),
               '/time': (context) => TimePage()
             });
       },

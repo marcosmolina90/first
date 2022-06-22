@@ -1,3 +1,4 @@
+import 'package:first/model/jogador.dart';
 import 'package:first/model/time.dart';
 import 'package:first/service/rest_service.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,32 @@ class JogadorPage extends StatefulWidget {
 }
 
 class _JogadorPageState extends State<JogadorPage> {
+  List<DropdownMenuItem<Jogador>> lista = [];
+  List<Jogador> jogadores = [];
+  Jogador jogador = Jogador();
+
+  @override
+  initState() {
+    init();
+  }
+
+  init() async {
+    carregaJogadores();
+  }
+
+  carregaJogadores() async {
+    List list = await RestService().list('/jogador/list', null);
+    setState(() {
+      jogadores = list.map((e) => Jogador.fromJson(e)).toList();
+      jogadores.add(Jogador());
+      lista = jogadores
+          .map<DropdownMenuItem<Jogador>>((e) => DropdownMenuItem<Jogador>(
+              value: e,
+              child: Text(e.nome == null ? 'Selecione' : e.nome.toString())))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +60,7 @@ class _JogadorPageState extends State<JogadorPage> {
               print(times);
             },
             child: Text('TextButton'),
-          )
+          ),
         ],
       ),
     );
