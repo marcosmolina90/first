@@ -1,3 +1,4 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:first/components/menu_component.dart';
 import 'package:first/model/jogador.dart';
 import 'package:first/model/time.dart';
@@ -5,6 +6,7 @@ import 'package:first/service/rest_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 
 class AddTime extends StatefulWidget {
   const AddTime({Key? key}) : super(key: key);
@@ -93,6 +95,28 @@ class _AddTimeState extends State<AddTime> {
                 items: lista,
               ))),
           Container(height: 5),
+          DateTimeField(
+              format: DateFormat('dd/MM/yyyy'),
+              decoration: InputDecoration(
+                  labelText: 'Data', border: const OutlineInputBorder()),
+              controller: TextEditingController(
+                text: formatTime(timeEdit.data),
+              ),
+              onShowPicker:
+                  (BuildContext context, DateTime? currentValue) async {
+                final date = await showDatePicker(
+                    context: context,
+                    // locale: Locale('pt'),
+                    firstDate: DateTime(1960),
+                    initialDate: currentValue ?? DateTime.now(),
+                    lastDate: DateTime(2100));
+
+                if (date != null) {
+                  timeEdit.data = date;
+                  return timeEdit.data;
+                } else
+                  return currentValue;
+              }),
           ElevatedButton.icon(
               onPressed: () async {
                 try {
@@ -112,6 +136,21 @@ class _AddTimeState extends State<AddTime> {
         ],
       ));
     }
+  }
+
+  String formatTime(DateTime? data) {
+    var format = DateFormat('dd/MM/yyyy');
+    if (data == null) {
+      return '';
+    }
+    var year = data.year;
+    var month = data.month;
+    var day = data.day;
+    var hour = data.hour;
+    var minute = data.minute;
+
+    var now = DateTime(year, month, day);
+    return format.format(now);
   }
 
   void alerta(BuildContext context, String message) {

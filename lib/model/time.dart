@@ -3,6 +3,7 @@ import 'package:first/model/jogador.dart';
 class Time {
   String? id;
   String? nome;
+  DateTime? data;
   Jogador? jogador = Jogador();
 
   Time({this.id, this.nome, this.jogador});
