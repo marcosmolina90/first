@@ -14,7 +14,7 @@ class RestService {
   ]);
 
   Uri getUri(String service, param) {
-    return Uri.http('localhost:8080', service);
+    return Uri.http('localhost:8080', service, param);
   }
 
   Future<Map<String, dynamic>> getter(String service, param) async {

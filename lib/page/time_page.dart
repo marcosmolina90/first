@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:first/model/jogador.dart';
 import 'package:first/model/time.dart';
 import 'package:first/page/app_page.dart';
@@ -56,8 +58,10 @@ class _TimePageState extends State<TimePage> {
                       ),
                     ),
                     onTap: () async {
-                      timeEdit = e;
-                      idJogagor = e.id!;
+                      var param = {'id': e.id};
+
+                      Navigator.of(context)
+                          .pushNamed("/addTime", arguments: jsonEncode(param));
                     },
                     title: Text(e.nome.toString()),
                     subtitle: Text(e.id.toString()),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:first/components/menu_component.dart';
 import 'package:first/model/jogador.dart';
@@ -27,6 +29,19 @@ class _AddTimeState extends State<AddTime> {
   }
 
   init() async {
+    Future.delayed(Duration.zero, () async {
+      var params = ModalRoute.of(context)?.settings.arguments;
+      var param = jsonDecode(params.toString());
+      if (param['id'] != null) {
+        var retorno =
+            await RestService().getter('/time/find', {'id': param['id']});
+        setState(() {
+          timeEdit = Time.fromJson(retorno);
+          if (timeEdit.jogador != null)
+            idJogador = timeEdit!.jogador!.id.toString();
+        });
+      }
+    });
     await carregaJogadores();
   }
 
